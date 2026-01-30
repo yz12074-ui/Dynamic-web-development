@@ -1,0 +1,115 @@
+/* ===== Global ===== */
+body {
+  font-family: Arial, sans-serif;
+  text-align: center;
+  background-color: #fafafa;
+  margin: 0;
+  padding: 0;
+}
+
+/* ===== Headings ===== */
+h1 {
+  font-size: 100px;
+  margin: 40px 0 20px;
+}
+
+h2 {
+  margin: 30px 0 20px;
+}
+
+/* ===== First Paragraph ===== */
+#first-paragraph {
+  text-align: center;
+  color: red;
+}
+
+/* ===== Center Box Example ===== */
+#div_css {
+  border: 2px solid black;
+  padding: 10px;
+  margin: 40px auto;          /* ⭐居中 */
+  background-color: lightgray;
+  height: 200px;
+  width: 400px;
+
+  display: flex;
+  justify-content: center;    /* 水平居中 */
+  align-items: center;        /* 垂直居中 */
+}
+
+#div_css p {
+  margin: 0;
+  text-align: center;
+}
+
+/* ===== Two Columns Layout ===== */
+.columns {
+  display: flex;
+  justify-content: center;    /* ⭐两列整体居中 */
+  gap: 80px;
+  margin-top: 40px;
+}
+.movie-item {
+  width: 120px;        /* ⭐ 控制海报整体大小 */
+  text-align: center;
+}
+
+.movie-item img {
+  width: 100%;         /* 图片跟随容器 */
+  height: auto;
+  border-radius: 10px;
+}
+
+/* 每一列 */
+.column {
+  width: 260px;
+}
+
+
+.movie-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr); /* ⭐一行 5 个 */
+  gap: 30px;
+  justify-items: center;
+  margin: 40px auto;
+  max-width: 1200px; /* ⭐给 grid 足够空间 */
+}
+
+.movie-item {
+  width: 180px;
+  text-align: center;
+}
+
+.movie-item img {
+  width: 100%;
+  border-radius: 12px;
+}
+
+.movie-item p {
+  margin-top: 8px;
+  font-weight: bold;
+}
+
+/* ===== Items (image + text) ===== */
+.item {
+  width: 180px;
+  margin: 0 auto 30px;        /* ⭐列内居中 */
+}
+
+.item img {
+  width: 100%;
+  border-radius: 12px;
+}
+
+.item p {
+  margin-top: 10px;
+  font-weight: bold;
+}
+
+/* ===== Back Link ===== */
+.back {
+  display: block;
+  margin: 50px 0;
+  text-decoration: none;
+  color: black;
+}
