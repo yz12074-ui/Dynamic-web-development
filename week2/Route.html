@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Abril+Fatface&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <title>Walking Route - Discovery Shanghai</title>
+    <style>
+        /* 针对地图页面的特殊布局 */
+        
+        .route-page-container {
+            display: flex;
+            height: calc(100vh - 80px);
+            /* 减去导航栏高度 */
+            overflow: hidden;
+        }
+        
+        .timeline-sidebar {
+            flex: 1;
+            overflow-y: auto;
+            padding: 40px;
+            background-color: #fff;
+        }
+        
+        .map-display {
+            flex: 1.5;
+            background-color: #eee;
+            position: relative;
+        }
+        /* 沿用你的卡片风格，但改为时间轴模式 */
+        
+        .stop-card {
+            border-left: 3px solid #fcb07e;
+            padding-left: 20px;
+            margin-bottom: 40px;
+            position: relative;
+        }
+        
+        .stop-card::before {
+            content: '';
+            position: absolute;
+            left: -9px;
+            top: 0;
+            width: 15px;
+            height: 15px;
+            background-color: #fcb07e;
+            border-radius: 50%;
+        }
+        
+        .stop-number {
+            font-family: 'Abril Fatface', serif;
+            color: #fcb07e;
+            font-size: 1.2rem;
+        }
+        
+        .stop-title {
+            font-family: 'Abril Fatface', serif;
+            font-size: 1.8rem;
+            margin: 5px 0;
+        }
+        
+        .stop-img {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+            border-radius: 8px;
+            margin: 10px 0;
+        }
+        
+        #google-map {
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+</head>
+
+<body>
+
+    <nav class="nav-container">
+        <div class="logo">
+            <a href="index.html" style="text-decoration: none; color: inherit;">Discovery<br>Shanghai</a>
+        </div>
+        <div class="nav-links">
+            <a href="food.html">Food & drinks</a>
+            <a href="route.html" class="active">Walking Route</a>
+            <a href="index.html">Attractions</a>
+        </div>
+    </nav>
+
+    <div class="route-page-container">
+        <aside class="timeline-sidebar">
+            <h1 class="hero-title" style="color: #1a1a1a; font-size: 2.5rem; text-align: left; margin-bottom: 30px;">
+                Day 1: Historic Core
+            </h1>
+
+            <div class="stop-card">
+                <span class="stop-number">01</span>
+                <h3 class="stop-title">The Bund (外滩)</h3>
+                <img src="home.jpg" class="stop-img" alt="The Bund">
+                <p>Start your morning with the iconic colonial skyline. Best visited at sunrise.</p>
+            </div>
+
+            <div class="stop-card">
+                <span class="stop-number">02</span>
+                <h3 class="stop-title">Yu Garden</h3>
+                <img src="yugarden.jpg" class="stop-img" alt="Yu Garden">
+                <p>A 15-minute walk from the Bund. Explore Ming Dynasty architecture.</p>
+            </div>
+
+            <div class="stop-card">
+                <span class="stop-number">03</span>
+                <h3 class="stop-title">Wukang Road</h3>
+                <img src="wukangroad.jpg" class="stop-img" alt="Wukang Road">
+                <p>Finish your day in the Former French Concession for coffee and history.</p>
+            </div>
+        </aside>
+
+        <main class="map-display">
+            <div id="google-map"></div>
+        </main>
+    </div>
+
+    <script>
+        function initMap() {
+            // 上海中心坐标
+            const shanghai = {
+                lat: 31.2304,
+                lng: 121.4737
+            };
+            const map = new google.maps.Map(document.getElementById("google-map"), {
+                zoom: 13,
+                center: shanghai,
+                styles: [ /* 这里可以加入暗色模式或简洁模式的样式 */ ]
+            });
+
+            // 添加标记点 (Marker)
+            const stops = [{
+                title: "The Bund",
+                pos: {
+                    lat: 31.2406,
+                    lng: 121.4905
+                }
+            }, {
+                title: "Yu Garden",
+                pos: {
+                    lat: 31.2272,
+                    lng: 121.4921
+                }
+            }, {
+                title: "Wukang Road",
+                pos: {
+                    lat: 31.2062,
+                    lng: 121.4350
+                }
+            }];
+
+            stops.forEach((stop, index) => {
+                new google.maps.Marker({
+                    position: stop.pos,
+                    map: map,
+                    label: (index + 1).toString(),
+                    title: stop.title
+                });
+            });
+        }
+    </script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&callback=initMap" async defer></script>
+</body>
+
+</html>

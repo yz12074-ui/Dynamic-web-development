@@ -1,28 +1,94 @@
+<!DOCTYPE html>
 <html>
 
 <head>
-    <title>class 2 🗣️</title>
-    <!-- adding an external stylesheet -->
-    <!-- link has 2 attributes: href, rel -->
-    <link href="style.css" rel="stylesheet" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Discover Shanghai In Your Way</title>
 </head>
 
 <body>
-    <p class="blue-text">hi! this is my first paragraph</p>
-    <p class="blue-text" id="big">hello! this is my second paragraph</p>
-    <p id="howdy">
-        howdy 🤠 this is my third paragraph
-        <span>🤠🐎💰💵</span>
-    </p>
 
-    <div class="parent">
-        <div class="child"></div>
-        <div class="child"></div>
-        <div class="child"></div>
-        <div class="child"></div>
-        <div class="child"></div>
-        <div class="child"></div>
-    </div>
+    <nav class="nav-container">
+        <div class="logo">
+            <a href="index.html">
+            Discovery<br>Shanghai
+            </a>
+        </div>
+        <div class="nav-links">
+            <a href="food.html">Food & drinks</a>
+            <a href="Route.html">Walking Route</a>
+            <a href="index.html">Attractions</a>
+        </div>
+    </nav>
+
+    <header class="hero-section" style="background-image: linear-gradient(rgba(0,0,0,0.2), rgba(0,0,0,0.2)), url('home.jpg');">
+        <h1 class="hero-title">Discover Shanghai</h1>
+        <h1 class="hero-title">In Your Way</h1>
+    </header>
+
+    <section class="intro-container">
+        <p class="intro-text">
+            Shanghai is a dynamic international city where tradition meets modern life. From historic streets and cultural landmarks to futuristic skylines and vibrant neighborhoods, the city offers endless possibilities for exploration, food, culture, and everyday
+            urban experiences.
+        </p>
+        <div style="text-align: center; margin-top: 40px;">
+            <a href="#" class="btn-plan">Plan your route</a>
+        </div>
+    </section>
+
+    <section class="content-container">
+        <h2 class="must-see-title">Must-See Attractions</h2>
+
+        <div class="attraction-card">
+            <div class="card-image" style="background-image: url('yugarden.jpg');"></div>
+            <div class="card-content">
+                <h3 class="card-title">Yu garden</h3>
+                <p class="card-description">
+                    Yu Garden is a classical Chinese garden located in the heart of Shanghai. Built during the Ming Dynasty, it features traditional pavilions, rockeries, ponds, and winding paths.
+                </p>
+                <a href="https://www.travelchinaguide.com/attraction/shanghai/yuyuan_garden.htm" target="_blank" class="explore-btn">Explore Site →</a>
+            </div>
+        </div>
+
+        <div class="attraction-card">
+            <div class="card-image" style="background-image: url('disneyland.jpg');"></div>
+            <div class="card-content">
+                <h3 class="card-title">Disneyland</h3>
+                <p class="card-description">
+                    Shanghai Disneyland stands out from other Disney parks with its immersive design and unique attractions. It is home to the world's first Zootopia themed land.
+                </p>
+                <a href="https://www.shanghaidisneyresort.com/" target="_blank" class="explore-btn">Explore Site →</a>
+            </div>
+        </div>
+
+        <div class="attraction-card">
+            <div class="card-image" style="background-image: url('wukangroad.jpg');"></div>
+            <div class="card-content">
+                <h3 class="card-title">Former French Concession</h3>
+                <p class="card-description">
+                    The former French Concession is a historic neighborhood known for its tree-lined streets, cafes, and European-style buildings.
+                </p>
+                <a href="https://zh.wikipedia.org/wiki/%E6%AD%A6%E5%BA%B7%E8%B7%AF_(%E4%B8%8A%E6%B5%B7)" target="_blank" class="explore-btn">Explore Site →</a>
+            </div>
+        </div>
+
+        <div class="attraction-card">
+            <div class="card-image" style="background-image: url('museum.jpg');"></div>
+            <div class="card-content">
+                <h3 class="card-title">Museums</h3>
+                <p class="card-description">
+                    Shanghai's museums showcase the city's history, art, and contemporary culture, offering deeper insight into its cultural heritage.
+                </p>
+                <a href="https://www.shanghaimuseum.net/mu/frontend/pg/index" target="_blank" class="explore-btn">Explore Site →</a>
+            </div>
+        </div>
+
+    </section>
+
+    <footer class="footer-spacer"></footer>
+
 </body>
 
 </html>

@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Abril+Fatface&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <title>Discover Shanghai In Your Way</title>
+</head>
+
+<body>
+
+    <nav class="nav-container">
+        <div class="logo">
+            <a href="index.html">
+            Discovery<br>Shanghai
+            </a>
+        </div>
+        <div class="nav-links">
+            <a href="page1.html">Food & drinks</a>
+            <a href="Route.html">Walking Route</a>
+            <a href="index.html">Attractions</a>
+        </div>
+    </nav>
+
+    <header class="hero-section-food">
+        <h1 class="hero-title">Authentic Shanghai Food</h1>
+
+    </header>
+
+    <section class="intro-container">
+        <p class="intro-text">
+            Shanghai is a metropolitan city that offers a wide world of cuisines, but this post focuses only on Shanghai cuisine (a.k.a. ben-bang-cai 本帮菜). I compiled a comprehensive list of dishes to eat while visiting Shanghai, including our recipe links (when
+            available) in case you want to recreate those dishes in your own kitchen. I also included a few restaurant recommendations. These restaurants don’t have four dollar signs ($$$$), but they have earned 5-star ratings from patrons. With foreign
+            visitors to Shanghai surpassing thirteen million annually, not to mention the large number of foreign expats there, this post will be valuable for many epicureans like myself. Think of it as your culinary guide to one of the most exciting
+            cities in the world––my hometown, Shanghai!
+        </p>
+
+    </section>
+
+
+    <h2 class="food-header">Authentic Shanghai Food</h2>
+    <section class="food-container">
+        <div class="main-display">
+            <div id="large-image" class="big-photo" style="background-image: url('CongYouBanMian.jpg');"></div>
+
+            <div class="info-card">
+                <h3 id="food-title">Cong You Ban Mian</h3>
+                <p id="food-desc">A classic Shanghai staple. Simple wheat noodles tossed in a fragrant oil infused with fried scallions and premium soy sauce.</p>
+
+                <div class="rank-header">Top 3 Restaurants</div>
+                <ul id="restaurant-items">
+                    <li>1. Old Jesse ★★★★★</li>
+                    <li>2. Jianguo 328 (建国328小馆) ★★★★★</li>
+                    <li>3. Shanghai Min (小南国) ★★★★</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="thumbnail-list">
+            <img src="CongYouBanMian.jpg" class="thumb active" onclick="changeFood('CongYouBanMian', 'Cong You Ban Mian', 'A classic Shanghai staple. Simple wheat noodles tossed in a fragrant oil infused with fried scallions and premium soy sauce.', ['1. Old Jesse ★★★★★', '2. Jianguo 328 ★★★★★', '3. Shanghai Min ★★★★'])">
+
+            <img src="hongshaorou.jpg" class="thumb" onclick="changeFood('hongshaorou', 'Hong Shao Rou', 'Sweet and savory braised pork belly, cooked slowly until it melts in your mouth.', ['1. Guang Ming Cun ★★★★★', '2. Jesse Restaurant ★★★★', '3. Home Style ★★★★'])">
+
+            <img src="xiaolongbao.jpg" class="thumb" onclick="changeFood('xiaolongbao', 'Xiao Long Bao', 'Famous soup dumplings with thin skin and rich broth. A masterpiece of Shanghai dim sum.', ['1. Jia Jia Tang Bao ★★★★★', '2. Din Tai Fung ★★★★', '3. Fu Chun ★★★★'])">
+
+            <img src="yanduoxian.jpg" class="thumb" onclick="changeFood('yanduoxian', 'Yan Duo Xian', 'A savory spring soup made with cured pork and fresh bamboo shoots.', ['1. Ren He Guan ★★★★★', '2. Shanghai Classical Hotel ★★★★', '3. Local Bistro ★★★★'])">
+
+            <img src="SongshuGuiyu.jpg" class="thumb" onclick="changeFood('SongshuGuiyu', 'Song Shu Gui Yu', 'Traditional sweet and sour mandarin fish, expertly carved and deep-fried.', ['1. Suzhou Style Rest. ★★★★★', '2. Central Hotel ★★★★', '3. Old Shanghai ★★★★'])">
+        </div>
+    </section>
+
+    <footer class="footer-spacer"></footer>
+
+    <script>
+        function changeFood(imgName, title, desc, restaurants) {
+
+            document.getElementById('large-image').style.backgroundImage = "url('" + imgName + ".jpg')";
+
+
+            document.getElementById('food-title').innerText = title;
+            document.getElementById('food-desc').innerText = desc;
+
+            const listContainer = document.getElementById('restaurant-items');
+            listContainer.innerHTML = "";
+            restaurants.forEach(item => {
+                const li = document.createElement('li');
+                li.innerText = item;
+                listContainer.appendChild(li);
+            });
+
+
+            const thumbs = document.getElementsByClassName('thumb');
+            for (let t of thumbs) {
+                t.classList.remove('active');
+            }
+
+            event.currentTarget.classList.add('active');
+        }
+    </script>
+
+</body>
+
+</html>
