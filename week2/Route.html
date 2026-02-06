@@ -8,12 +8,9 @@
     <link rel="stylesheet" href="style.css">
     <title>Walking Route - Discovery Shanghai</title>
     <style>
-        /* 针对地图页面的特殊布局 */
-        
         .route-page-container {
             display: flex;
             height: calc(100vh - 80px);
-            /* 减去导航栏高度 */
             overflow: hidden;
         }
         
@@ -80,11 +77,13 @@
 
     <nav class="nav-container">
         <div class="logo">
-            <a href="index.html" style="text-decoration: none; color: inherit;">Discovery<br>Shanghai</a>
+            <a href="index.html">
+            Discovery<br>Shanghai
+            </a>
         </div>
         <div class="nav-links">
             <a href="food.html">Food & drinks</a>
-            <a href="route.html" class="active">Walking Route</a>
+            <a href="Route.html">Walking Route</a>
             <a href="index.html">Attractions</a>
         </div>
     </nav>
@@ -122,49 +121,8 @@
         </main>
     </div>
 
-    <script>
-        function initMap() {
-            // 上海中心坐标
-            const shanghai = {
-                lat: 31.2304,
-                lng: 121.4737
-            };
-            const map = new google.maps.Map(document.getElementById("google-map"), {
-                zoom: 13,
-                center: shanghai,
-                styles: [ /* 这里可以加入暗色模式或简洁模式的样式 */ ]
-            });
 
-            // 添加标记点 (Marker)
-            const stops = [{
-                title: "The Bund",
-                pos: {
-                    lat: 31.2406,
-                    lng: 121.4905
-                }
-            }, {
-                title: "Yu Garden",
-                pos: {
-                    lat: 31.2272,
-                    lng: 121.4921
-                }
-            }, {
-                title: "Wukang Road",
-                pos: {
-                    lat: 31.2062,
-                    lng: 121.4350
-                }
-            }];
 
-            stops.forEach((stop, index) => {
-                new google.maps.Marker({
-                    position: stop.pos,
-                    map: map,
-                    label: (index + 1).toString(),
-                    title: stop.title
-                });
-            });
-        }
     </script>
     <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&callback=initMap" async defer></script>
 </body>
