@@ -1,12 +1,8 @@
 alert("Are you a dog person?");
 
-
 let currentSelectedMood = null;
 
 window.onload = async() => {
-    console.log("window has loaded");
-
-
     let c = document.getElementById("dog-display");
     if (c) {
         let url = "https://dog.ceo/api/breeds/image/random";
@@ -24,10 +20,9 @@ window.onload = async() => {
             photo.style.borderRadius = "15px";
             c.appendChild(photo);
         } catch (error) {
-            console.log("API Error:", error);
+            console.log(error);
         }
     }
-
 
     const bone = document.getElementById("bone");
     const bowl = document.getElementById("dog-bowl");
@@ -37,7 +32,6 @@ window.onload = async() => {
     }
 };
 
-
 function selectMood(element, moodName) {
     let allItems = document.querySelectorAll('.mood-item');
     allItems.forEach(item => item.classList.remove('selected'));
@@ -46,7 +40,6 @@ function selectMood(element, moodName) {
     document.getElementById('interaction-text').innerText = "Ready! Now tap the paw!";
 }
 
-
 function confirmAndGo() {
     if (currentSelectedMood) {
         window.location.href = "page2.html?mood=" + currentSelectedMood;
@@ -54,7 +47,6 @@ function confirmAndGo() {
         alert("Please select a mood first! 🐾");
     }
 }
-
 
 function dragElement(elmnt, target) {
     var pos1 = 0,
@@ -90,28 +82,27 @@ function dragElement(elmnt, target) {
             closeDragElement();
             elmnt.style.display = "none";
         }
-
-        function closeDragElement() {
-            document.onmouseup = null;
-            document.onmousemove = null;
-        }
     }
 
-
-    function isColliding(a, b) {
-        const rect1 = a.getBoundingClientRect();
-        const rect2 = b.getBoundingClientRect();
-        return !(
-            rect1.top > rect2.bottom ||
-            rect1.bottom < rect2.top ||
-            rect1.right < rect2.left ||
-            rect1.left > rect2.right
-        );
+    function closeDragElement() {
+        document.onmouseup = null;
+        document.onmousemove = null;
     }
+}
 
-    function playEatingSound() {
-        let audio = new Audio('dog.mp3');
-        audio.play().catch(e => console.log("Audio play failed, need user interaction first."));
-        alert("Yummy! You fed the dog! 🦴");
-    }
+function isColliding(a, b) {
+    const rect1 = a.getBoundingClientRect();
+    const rect2 = b.getBoundingClientRect();
+    return !(
+        rect1.top > rect2.bottom ||
+        rect1.bottom < rect2.top ||
+        rect1.right < rect2.left ||
+        rect1.left > rect2.right
+    );
+}
+
+function playEatingSound() {
+    let audio = new Audio('dog.mp3');
+    audio.play().catch(e => {});
+    alert("Yummy! You fed the dog! 🦴");
 }
