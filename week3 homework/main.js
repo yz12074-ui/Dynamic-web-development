@@ -1,97 +1,117 @@
-// shows a alert when the page opens
-alert("javascript page has been successfully linked!");
-// write to the inspector console
-console.log("this is a console message");
+alert("Are you a dog person?");
+
+
+let currentSelectedMood = null;
 
 window.onload = async() => {
     console.log("window has loaded");
 
-    // retrieves a specific element using the id from the html page
-    document.getElementById("important");
 
-    // manipulate the text of the selected element
-    document.getElementById("important").innerHTML =
-        "i have <span>changed</span> the text with javascript";
+    let c = document.getElementById("dog-display");
+    if (c) {
+        let url = "https://dog.ceo/api/breeds/image/random";
+        try {
+            let response = await fetch(url);
+            let dogData = await response.json();
+            let dogImage = dogData.message;
 
-    // store the long document text in a variable
-    let importantParagraph = document.getElementById("important");
-    // we can manipulate the style and grab any css attribute, but the name of the property uses camel case instead of hyphens
-    // any style changes that happen in js will supersede any styling via the .css file
-    importantParagraph.style.backgroundColor = "#840032";
-    importantParagraph.style.backgroundColor = "#e59500";
-
-    importantParagraph.classList.add("hide");
-    importantParagraph.classList.remove("hide");
-
-    // adding elements to html using js
-    // 4 steps
-    // 1. getting the element that we will add a child to
-    let c = document.getElementById("container");
-    // 2. what type of tag will we create
-    let i = document.createElement("pexels-claudia-seidensticker-111222-345162");
-    // 3. modify new element as needed
-    i.src =
-        "https://kagi.com/proxy/c64d1a49-64fd-4b46-805a-02226004fc12-hocking-hills-state-park.jpg?c=pdUGaDgO_stg2qOVyjqM1WCjRDfM96q4vyzEn1YsfYCgdmiLeOOzj3Rias1F2yLQLLxM1VoKvwYcwmoeeRwTets7UFUVw24wfTA9BX98y0PypwDJXbwYAony8UayQHrOd_Qe_2fhZL2U3b-sJ9cu0ejPdnjKhkUUt5h8jjSlu5zHnZNeit2Jv2xePx3nEdEH5MDFZpWY2dWAlZfJKcVIsw%3D%3D";
-    // 4. add the new child to the parent
-    c.appendChild(i);
-
-    // add an event listener to my parent div
-    // document.getElementById('container')
-    // event listener is a function that takes 2 parameters
-    // 1. name of the event
-    // 2. callback function
-    c.addEventListener("click", () => {
-        console.log("clicked!");
-
-        if (importantParagraph.classList.contains("hide")) {
-            importantParagraph.classList.remove("hide");
-        } else {
-            importantParagraph.classList.add("hide");
+            c.innerHTML = "";
+            let photo = document.createElement("img");
+            photo.src = dogImage;
+            photo.style.width = "100%";
+            photo.style.height = "100%";
+            photo.style.objectFit = "cover";
+            photo.style.borderRadius = "15px";
+            c.appendChild(photo);
+        } catch (error) {
+            console.log("API Error:", error);
         }
-    });
-
-    // use class as the selector for the elements
-    let blues = document.getElementsByClassName("blue");
-    console.log(blues);
-    blues[1].style.backgroundColor = "skyblue";
-
-    for (let b of blues) {
-        b.style.border = "navy solid 4px";
     }
 
-    // making an api request:
-    // 1. create url params (everything that goes after the ?)
-    let params = new URLSearchParams({
-        apikey: "9aa8e798",
-        s: "one battle after another",
-        type: "movie",
-    });
-    console.log(params);
-    // 2. create the url
-    let url = "https://omdbapi.com/?" + params;
-    console.log(url);
-    // 3. make the request to the url using fetch
-    let response = await fetch(url);
-    console.log(response);
 
-    // converting the response to json
-    let movieData = await response.json();
-    console.log(movieData);
-    // retrieving the specific structure of the response via the Search
-    // this only exists because of the way the omdb api works
-    let movies = movieData.Search;
-    console.log(movies);
+    const bone = document.getElementById("bone");
+    const bowl = document.getElementById("dog-bowl");
 
-    // dynamically adding to my webpage using the data given to me from the api
-    for (let m of movies) {
-        let div = document.createElement("div");
-
-        div.textContent = m.Title;
-
-        let poster = document.createElement("img");
-        poster.src = m.Poster;
-
-        div.appendChild(poster);
-        c.appendChild(div);
+    if (bone && bowl) {
+        dragElement(bone, bowl);
     }
 };
+
+
+function selectMood(element, moodName) {
+    let allItems = document.querySelectorAll('.mood-item');
+    allItems.forEach(item => item.classList.remove('selected'));
+    element.classList.add('selected');
+    currentSelectedMood = moodName;
+    document.getElementById('interaction-text').innerText = "Ready! Now tap the paw!";
+}
+
+
+function confirmAndGo() {
+    if (currentSelectedMood) {
+        window.location.href = "page2.html?mood=" + currentSelectedMood;
+    } else {
+        alert("Please select a mood first! 🐾");
+    }
+}
+
+
+function dragElement(elmnt, target) {
+    var pos1 = 0,
+        pos2 = 0,
+        pos3 = 0,
+        pos4 = 0;
+
+    elmnt.onmousedown = dragMouseDown;
+
+    function dragMouseDown(e) {
+        e = e || window.event;
+        e.preventDefault();
+        pos3 = e.clientX;
+        pos4 = e.clientY;
+        document.onmouseup = closeDragElement;
+        document.onmousemove = elementDrag;
+    }
+
+    function elementDrag(e) {
+        e = e || window.event;
+        e.preventDefault();
+        pos1 = pos3 - e.clientX;
+        pos2 = pos4 - e.clientY;
+        pos3 = e.clientX;
+        pos4 = e.clientY;
+
+        elmnt.style.position = "absolute";
+        elmnt.style.top = (elmnt.offsetTop - pos2) + "px";
+        elmnt.style.left = (elmnt.offsetLeft - pos1) + "px";
+
+        if (isColliding(elmnt, target)) {
+            playEatingSound();
+            closeDragElement();
+            elmnt.style.display = "none";
+        }
+
+        function closeDragElement() {
+            document.onmouseup = null;
+            document.onmousemove = null;
+        }
+    }
+
+
+    function isColliding(a, b) {
+        const rect1 = a.getBoundingClientRect();
+        const rect2 = b.getBoundingClientRect();
+        return !(
+            rect1.top > rect2.bottom ||
+            rect1.bottom < rect2.top ||
+            rect1.right < rect2.left ||
+            rect1.left > rect2.right
+        );
+    }
+
+    function playEatingSound() {
+        let audio = new Audio('dog.mp3');
+        audio.play().catch(e => console.log("Audio play failed, need user interaction first."));
+        alert("Yummy! You fed the dog! 🦴");
+    }
+}
