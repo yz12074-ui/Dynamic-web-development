@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>MoodPaw</title>
+    <link href="style.css" rel="stylesheet" />
+</head>
+
+<body>
+
+    <div id="container">
+        <header>
+            <h1 class="logo">MoodPaw</h1>
+            <p class="tagline">Select your mood</p>
+        </header>
+
+        <div class="mood-grid">
+            <div class="mood-item" onclick="selectMood(this, 'happy')">
+                <span class="emoji">😄</span>
+                <p>Happy</p>
+            </div>
+            <div class="mood-item" onclick="selectMood(this, 'sad')">
+                <span class="emoji">😭</span>
+                <p>Sad</p>
+            </div>
+            <div class="mood-item" onclick="selectMood(this, 'meh')">
+                <span class="emoji">😐</span>
+                <p>Meh</p>
+            </div>
+            <div class="mood-item" onclick="selectMood(this, 'chaotic')">
+                <span class="emoji">🤯</span>
+                <p>Chaotic</p>
+            </div>
+        </div>
+
+        <div class="footer-interaction">
+            <a href="page2.html">
+                <img id="paw-icon" src="paw.png" alt="MoodPaw Logo" width="100" class="paw">
+            </a>
+            <p id="interaction-text">Give five with the paw</p>
+        </div>
+    </div>
+    </div>
+
+    <script src="main.js"></script>
+</body>
+
+</html>

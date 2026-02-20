@@ -1,5 +1,5 @@
 alert("Are you a dog person?");
-console.log("JS LOADED");
+
 let currentSelectedMood = null;
 
 window.onload = async() => {
@@ -29,6 +29,12 @@ window.onload = async() => {
 
     if (bone && bowl) {
         dragElement(bone, bowl);
+    }
+    // Load ticker names when page loads
+    try {
+        await loadTicker();
+    } catch (e) {
+        console.error('Failed to load ticker on startup:', e);
     }
 };
 
@@ -105,4 +111,57 @@ function playEatingSound() {
     let audio = new Audio('dog.mp3');
     audio.play().catch(e => {});
     alert("Yummy! You fed the dog! 🦴");
+}
+// 绑定按钮
+const addBtn = document.getElementById("addNameBtn");
+
+if (addBtn) {
+    addBtn.addEventListener("click", submitName);
+}
+
+// 提交名字
+async function submitName() {
+    const input = document.getElementById("dogNameInput");
+    const name = input.value.trim();
+
+    if (!name) return;
+
+    try {
+        const res = await fetch("/ticker", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ name })
+        });
+        if (!res.ok) {
+            const text = await res.text().catch(() => '');
+            throw new Error(res.status + ' ' + res.statusText + ' ' + text);
+        }
+    } catch (err) {
+        console.error('submitName failed:', err);
+        alert('Failed to submit name. See console for details.');
+        return;
+    }
+
+    input.value = "";
+    loadTicker();
+}
+
+// 加载 ticker
+async function loadTicker() {
+    const ticker = document.getElementById("ticker-content");
+    if (!ticker) return;
+
+    try {
+        const res = await fetch("/ticker");
+        if (!res.ok) {
+            const text = await res.text().catch(() => '');
+            throw new Error(res.status + ' ' + res.statusText + ' ' + text);
+        }
+        const data = await res.json();
+        const names = (data.names || []).map(n => ` 🐾 ${n.name} `).join("");
+        ticker.innerHTML = names + names;
+    } catch (err) {
+        console.error('loadTicker failed:', err);
+        ticker.innerHTML = 'Failed to load names.';
+    }
 }
