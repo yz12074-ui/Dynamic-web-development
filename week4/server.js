@@ -83,6 +83,7 @@ app.post("/ticker", (req, res) => {
 });
 // LAST STEP ALWAYS
 // start our express application
+
 app.listen(8000, () => {
     console.log("starter server is working");
 });

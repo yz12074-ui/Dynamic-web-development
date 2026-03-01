@@ -1,0 +1,20 @@
+body {
+    background-color: blanchedalmond;
+    /* things that i do to make a make a singular page */
+    margin: 0;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+}
+
+form {
+    /* one of the 5 display type */
+    /* goes on the parent of the items we want to be in a grid */
+    display: flex;
+    flex-direction: column;
+    width: 30%
+}
+
+textarea {
+    resize: none;
+}
