@@ -1,0 +1,381 @@
+/* ── reset ─────────────────────────────────────── */
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+
+/* ── base ──────────────────────────────────────── */
+
+:root {
+    --color-bg: #f5f4f0;
+    --color-surface: #ffffff;
+    --color-text: #1a1a1a;
+    --color-muted: #888;
+    --color-accent: #1a1a1a;
+    --color-accent-hover: #333;
+    --font: 'Georgia', serif;
+    --font-mono: 'Courier New', monospace;
+    --radius: 4px;
+    --gap: 1.5rem;
+}
+
+body {
+    background-image: url('assets/grid-background.png'), url('assets/table-background.png');
+    /* background-repeat: no-repeat, no-repeat; */
+    background-size: 100vw 100vh, 100vw 100vh;
+    background-position: top left, top left;
+    background-attachment: fixed, fixed;
+    color: var(--color-text);
+    font-family: var(--font);
+    min-height: 100vh;
+}
+
+
+/* ── shared buttons ────────────────────────────── */
+
+.btn {
+    display: inline-block;
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    text-decoration: none;
+    cursor: pointer;
+    border: none;
+    background: none;
+}
+
+.btn--primary {
+    background: var(--color-accent);
+    color: #fff;
+    padding: 0.55rem 1.4rem;
+    border-radius: var(--radius);
+    letter-spacing: 0.04em;
+    min-width: 300px;
+    align-self: center;
+}
+
+.btn--primary:hover {
+    background: var(--color-accent-hover);
+}
+
+.btn--enter {
+    background: var(--color-accent);
+    color: #fff;
+    padding: 0.75rem 2rem;
+    border-radius: var(--radius);
+    font-size: 1rem;
+    letter-spacing: 0.06em;
+}
+
+.btn--enter:hover {
+    background: var(--color-accent-hover);
+}
+
+.btn--back {
+    color: var(--color-muted);
+    font-size: 0.85rem;
+    letter-spacing: 0.03em;
+}
+
+.btn--back:hover {
+    color: var(--color-text);
+}
+
+
+/* ── homepage ──────────────────────────────────── */
+
+.home {
+    max-width: 680px;
+    margin: 0 auto;
+    padding: 2rem 1.5rem;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 3.5rem;
+}
+
+.home__header {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+}
+
+.home__title {
+    font-family: 'Playwrite NZ Guides';
+    font-size: 4rem;
+    font-weight: normal;
+    letter-spacing: -0.02em;
+    text-align: center;
+}
+
+.home__subtitle {
+    color: var(--color-muted);
+    font-size: 0.95rem;
+    font-style: italic;
+    text-align: center;
+}
+
+
+/* ── upload form ───────────────────────────────── */
+
+.section-label {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--color-muted);
+    margin-bottom: 1rem;
+    font-weight: normal;
+}
+
+.home__upload form {
+    display: flex;
+    flex-direction: column;
+    gap: 0.85rem;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+}
+
+input[type="text"] {
+    font-family: var(--font);
+    font-size: 1rem;
+    border: none;
+    border-bottom: 1px solid #ccc;
+    background: transparent;
+    padding: 0.5rem 0;
+    outline: none;
+    color: var(--color-text);
+    width: 100%;
+}
+
+input[type="text"]:focus {
+    border-bottom-color: var(--color-accent);
+}
+
+input[type="text"]::placeholder {
+    color: var(--color-muted);
+}
+
+.file-label {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    color: var(--color-muted);
+    cursor: pointer;
+    padding: 0.4rem 0;
+}
+
+.file-label:hover {
+    color: var(--color-text);
+}
+
+input[type="file"] {
+    display: none;
+}
+
+
+/* ── hand illustration ─────────────────────────── */
+
+.home__hand {
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    width: 35vw;
+    max-width: 480px;
+    pointer-events: none;
+}
+
+
+/* ── enter button section ──────────────────────── */
+
+.home__enter {
+    display: flex;
+    justify-content: center;
+    padding-top: 1rem;
+    border-top: 1px solid #e0e0e0;
+}
+
+
+/* ── my-desk header ────────────────────────────── */
+
+.my-desk__header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    padding: 1.5rem 2rem;
+    background: transparent;
+    z-index: 20;
+}
+
+.my-desk__header .btn--back {
+    color: var(--color-text);
+}
+
+
+/* ── my-desk notebook ──────────────────────────── */
+
+.my-desk__notebook-container {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 60vw;
+    max-width: 860px;
+    z-index: 1;
+}
+
+.my-desk__notebook {
+    width: 100%;
+    display: block;
+    pointer-events: none;
+    user-select: none;
+}
+
+
+/* overlay split across the two notebook pages */
+
+.my-desk__notebook-content {
+    position: absolute;
+    top: 20%;
+    bottom: 10%;
+    left: 8%;
+    right: 8%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6%;
+    overflow: hidden;
+}
+
+
+/* ── left page: caption list ───────────────────── */
+
+.my-desk__left-page {
+    overflow-y: auto;
+    scrollbar-width: none;
+}
+
+.my-desk__left-page::-webkit-scrollbar {
+    display: none;
+}
+
+.my-desk__caption-list {
+    list-style: disc;
+    padding-left: 1.1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+}
+
+.my-desk__caption-item {
+    cursor: pointer;
+    font-size: 0.78rem;
+    line-height: 1.45;
+    padding: 0.3rem 0.5rem;
+    border-radius: 3px;
+    color: var(--color-muted);
+}
+
+.my-desk__caption-item:hover {
+    color: var(--color-text);
+}
+
+.my-desk__caption-item.active {
+    color: var(--color-text);
+    background: rgba(0, 0, 0, 0.05);
+}
+
+
+/* ── right page: image preview ─────────────────── */
+
+.my-desk__right-page {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.my-desk__preview-img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+    display: none;
+}
+
+.my-desk__no-image {
+    font-style: italic;
+    font-size: 0.78rem;
+    color: var(--color-muted);
+    text-align: center;
+}
+
+
+/* ── p5 sketch ─────────────────── */
+
+
+/* 避免页面自带 margin 造成像有边框 */
+
+html,
+body {
+    margin: 0;
+    padding: 0;
+}
+
+
+/* 如果你的 my-desk 是相对定位容器，p5 就跟着它走 */
+
+.my-desk {
+    position: relative;
+}
+
+
+/* p5 小组件本体 */
+
+.p5-widget {
+    position: absolute;
+    /* 跟着 my-desk 右上角 */
+    top: 16px;
+    right: 16px;
+    width: 220px;
+    height: 220px;
+    border: none;
+    outline: none;
+    background: transparent;
+    overflow: hidden;
+    /* 防止画布超出 */
+}
+
+
+/* 关键：canvas 设为 block，去掉底部缝 + 禁掉任何边框阴影 */
+
+#p5-widget {
+    position: fixed;
+    top: 24px;
+    right: 24px;
+    width: 280px;
+    height: 600px;
+    z-index: 999999;
+    background: transparent;
+    border: none;
+    outline: none;
+    overflow: hidden;
+}
+
+#p5-widget canvas {
+    display: block;
+    border: none !important;
+    outline: none !important;
+    box-shadow: none !important;
+}

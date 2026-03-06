@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>My-Desk</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Playwrite+NZ+Guides&display=swap" rel="stylesheet" />
+    <link href="style.css" rel="stylesheet" />
+</head>
+
+<body>
+    <main class="home">
+        <header class="home__header">
+            <h1 class="home__title">Amanda's My-Desk</h1>
+            <p class="home__subtitle">What is in your mind?</p>
+        </header>
+
+        <section class="home__upload">
+            <h2 class="section-label">add something</h2>
+            <form id="upload-form" enctype="multipart/form-data">
+                <div class="form-group">
+                    <input type="text" name="caption" id="caption" placeholder="write a caption..." autocomplete="off" required />
+                </div>
+                <div class="form-group">
+                    <label class="file-label" for="blob">
+							<span id="file-label-text">attach an image (optional)</span>
+							<input type="file" name="blob" id="blob" accept="image/*" />
+						</label>
+                </div>
+                <button type="submit" class="btn btn--primary">post</button>
+            </form>
+        </section>
+
+        <section class="home__enter">
+            <a href="/my-desk.html" class="btn btn--enter">Enter My-Desk</a>
+        </section>
+    </main>
+
+    <img class="home__hand" src="assets/hand.png" alt="" />
+
+    <script src="index.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>My-Desk</title>
+    <script src="https://cdn.jsdelivr.net/npm/p5@1.11.11/lib/p5.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/p5@1.11.11/lib/addons/p5.sound.min.js"></script>
+    <script src="main.js"></script>
+    <link href="style.css" rel="stylesheet" />
+
+
+</head>
+
+<body>
+    <header class="my-desk__header">
+        <a href="/" class="btn btn--back">← back</a>
+    </header>
+
+    <!-- ✅ only ONE widget container -->
+    <div id="p5-widget" class="p5-widget"></div>
+
+    <div class="my-desk__notebook-container">
+        <img class="my-desk__notebook" src="assets/notebook.png" alt="" />
+
+        <div class="my-desk__notebook-content">
+            <div class="my-desk__left-page">
+                <ul class="my-desk__caption-list" id="caption-list"></ul>
+            </div>
+
+            <div class="my-desk__right-page">
+                <img class="my-desk__preview-img" id="preview-img" src="" alt="" />
+                <p class="my-desk__no-image" id="no-image-msg">no image attached</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- ✅ your scripts MUST be after the DOM -->
+    <script src="p5-widget.js"></script>
+    <script src="my-desk.js"></script>
+</body>
+
+</html>
