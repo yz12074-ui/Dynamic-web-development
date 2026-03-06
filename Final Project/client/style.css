@@ -324,28 +324,18 @@ input[type="file"] {
 
 /* ── p5 sketch ─────────────────── */
 
-
-/* 避免页面自带 margin 造成像有边框 */
-
 html,
 body {
     margin: 0;
     padding: 0;
 }
 
-
-/* 如果你的 my-desk 是相对定位容器，p5 就跟着它走 */
-
 .my-desk {
     position: relative;
 }
 
-
-/* p5 小组件本体 */
-
 .p5-widget {
     position: absolute;
-    /* 跟着 my-desk 右上角 */
     top: 16px;
     right: 16px;
     width: 220px;
@@ -354,11 +344,7 @@ body {
     outline: none;
     background: transparent;
     overflow: hidden;
-    /* 防止画布超出 */
 }
-
-
-/* 关键：canvas 设为 block，去掉底部缝 + 禁掉任何边框阴影 */
 
 #p5-widget {
     position: fixed;

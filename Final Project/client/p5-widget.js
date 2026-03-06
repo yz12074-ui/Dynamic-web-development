@@ -2,7 +2,7 @@ window.addEventListener("DOMContentLoaded", () => {
     const widgetSketch = (sketch) => {
         let bgImg;
 
-        // ✅ use your real local files
+
         let tracks = [
             { title: "夜に駆ける (Yoru ni Kakeru)", artist: "YOASOBI", file: "assets/yoru.mp3" },
             { title: "Lemon", artist: "Kenshi Yonezu", file: "assets/lemon.mp3" },
@@ -11,7 +11,7 @@ window.addEventListener("DOMContentLoaded", () => {
             { title: "Love Story", artist: "Taylor Swift", file: "assets/lovestory.mp3" },
         ];
 
-        let screen = "menu"; // menu | songs | artists | now
+        let screen = "menu";
         let menuItems = ["Playlists", "Artists", "Songs", "Settings", "About", "Now Playing"];
         let selection = 0;
 
@@ -19,13 +19,11 @@ window.addEventListener("DOMContentLoaded", () => {
         let isPlaying = false;
         let audioReady = false;
 
-        // UI geometry
         let ipod = {};
         let buttons = {};
 
-        // -------- lifecycle --------
+
         sketch.preload = () => {
-            // ✅ your actual filename has a space
             bgImg = sketch.loadImage(
                 "assets/musicplayer.png",
                 () => console.log("✅ bg loaded"),
@@ -52,7 +50,6 @@ window.addEventListener("DOMContentLoaded", () => {
         sketch.draw = () => {
             sketch.clear();
 
-            // background image (cover)
             if (bgImg) {
                 const scale = Math.max(sketch.width / bgImg.width, sketch.height / bgImg.height);
                 const w = bgImg.width * scale;
@@ -97,7 +94,7 @@ window.addEventListener("DOMContentLoaded", () => {
             if (hit(buttons.prev)) { prevTrack(); return; }
         };
 
-        // -------- layout (scaled to 260x260) --------
+        // -------- layout --------
         function layout() {
             ipod.x = sketch.width / 2;
             ipod.y = sketch.height / 2;
@@ -193,7 +190,6 @@ window.addEventListener("DOMContentLoaded", () => {
 
             const startY = header ? 22 : 10;
 
-            // only visible rows
             const maxRows = Math.max(1, Math.floor((s.h - startY - 6) / rowH));
             const offset = Math.max(0, sel - Math.floor(maxRows / 2));
             const end = Math.min(items.length, offset + maxRows);
