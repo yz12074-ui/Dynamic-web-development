@@ -26,15 +26,15 @@ window.addEventListener("DOMContentLoaded", () => {
         sketch.preload = () => {
             bgImg = sketch.loadImage(
                 "assets/musicplayer.png",
-                () => console.log("✅ bg loaded"),
-                (e) => console.error("❌ bg failed", e)
+                () => console.log(" bg loaded"),
+                (e) => console.error(" bg failed", e)
             );
 
             for (let t of tracks) {
                 t.sound = sketch.loadSound(
                     t.file,
-                    () => console.log("✅ loaded:", t.file),
-                    (err) => console.error("❌ failed:", t.file, err)
+                    () => console.log("loaded:", t.file),
+                    (err) => console.error("failed:", t.file, err)
                 );
             }
         };
@@ -249,7 +249,7 @@ window.addEventListener("DOMContentLoaded", () => {
             let prog = 0;
 
             if (snd && snd.isLoaded() && snd.duration() > 0) {
-                // currentTime() returns seconds since start
+
                 prog = sketch.constrain(snd.currentTime() / snd.duration(), 0, 1);
             }
             sketch.fill(120);
