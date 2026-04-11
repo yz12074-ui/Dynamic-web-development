@@ -1,0 +1,594 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>生日快乐</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital&family=Ma+Shan+Zheng&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            background: #fff;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 48px 20px 80px;
+            overflow-x: hidden;
+        }
+        
+        .title {
+            font-family: 'Playfair Display', serif;
+            font-style: italic;
+            font-size: 13px;
+            color: #c9a07a;
+            letter-spacing: 3px;
+            margin-bottom: 36px;
+            animation: up 1s ease 0.3s both;
+        }
+        /* ── CARD FLIP ──
+   두 장의 absolute 이미지를 opacity+pointer-events로 전환
+   3D transform 없이 확실하게 전환 */
+        
+        .scene {
+            margin-bottom: 18px;
+        }
+        
+        .card-shell {
+            width: 420px;
+            height: 280px;
+            position: relative;
+            cursor: pointer;
+            animation: up 1s ease 0.6s both;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 12px 48px rgba(180, 140, 100, 0.2), 0 3px 16px rgba(0, 0, 0, 0.08);
+        }
+        
+        .card-shell:hover {
+            transform: scale(1.02);
+            transition: transform 0.25s ease;
+        }
+        
+        .card-img {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: opacity 0.0s, transform 1.0s cubic-bezier(0.645, 0.045, 0.355, 1);
+            pointer-events: none;
+            user-select: none;
+        }
+        /* Front visible by default */
+        
+        .card-img.front {
+            opacity: 1;
+            z-index: 2;
+            transform: rotateY(0deg);
+            transform-origin: center;
+            backface-visibility: hidden;
+        }
+        
+        .card-img.back {
+            opacity: 0;
+            z-index: 1;
+            transform: rotateY(0deg);
+        }
+        /* Flip state: animate front out, back in using 3D card wrapper */
+        /* Better approach: use a real 3D wrapper but fix the backface issue
+   by counter-rotating the back image */
+        
+        .card-3d {
+            width: 420px;
+            height: 280px;
+            position: relative;
+            cursor: pointer;
+            animation: up 1s ease 0.6s both;
+            transform-style: preserve-3d;
+            transition: transform 0.9s cubic-bezier(0.645, 0.045, 0.355, 1);
+            border-radius: 16px;
+        }
+        
+        .card-3d:not(.flipped):hover {
+            transform: scale(1.02) rotateY(5deg);
+            transition: transform 0.25s ease;
+        }
+        
+        .card-3d.flipped {
+            transform: rotateY(180deg);
+        }
+        
+        .card-3d.flipped:hover {
+            transform: rotateY(185deg) scale(1.02);
+            transition: transform 0.25s ease;
+        }
+        
+        .face {
+            position: absolute;
+            inset: 0;
+            border-radius: 16px;
+            overflow: hidden;
+            backface-visibility: hidden;
+            -webkit-backface-visibility: hidden;
+            box-shadow: 0 12px 48px rgba(180, 140, 100, 0.2), 0 3px 16px rgba(0, 0, 0, 0.08);
+        }
+        
+        .face img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            pointer-events: none;
+            user-select: none;
+        }
+        /* KEY FIX: back face rotated 180deg around Y,
+   AND the img inside counter-rotated so it doesn't mirror */
+        
+        .face-front {
+            transform: rotateY(0deg);
+        }
+        
+        .face-back {
+            transform: rotateY(180deg);
+        }
+        /* counter-mirror the back image so text/photo reads correctly */
+        
+        .face-back img {
+            transform: scaleX(-1);
+        }
+        
+        .hint {
+            font-size: 11px;
+            color: #d4a87c;
+            letter-spacing: 2px;
+            margin-bottom: 44px;
+            animation: up 1s ease 1.2s both;
+        }
+        /* BIRTHDAY */
+        
+        #bday {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+            max-width: 500px;
+        }
+        
+        #bday.on {
+            display: flex;
+        }
+        
+        .bday-msg {
+            font-family: 'Ma Shan Zheng', serif;
+            font-size: 28px;
+            color: #8a4a20;
+            text-align: center;
+            letter-spacing: 3px;
+            line-height: 1.85;
+            margin-bottom: 32px;
+            animation: up 0.9s ease 0.1s both;
+        }
+        /* CAKE */
+        
+        .cake-box {
+            position: relative;
+            width: 260px;
+            height: 200px;
+            cursor: pointer;
+            margin-bottom: 10px;
+            border-radius: 20px;
+            overflow: hidden;
+            animation: up 0.9s ease 0.3s both;
+            transition: transform 0.2s ease;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25);
+        }
+        
+        .cake-box:hover {
+            transform: scale(1.04);
+        }
+        
+        .cake-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            pointer-events: none;
+        }
+        
+        .flame {
+            position: absolute;
+            width: 14px;
+            height: 24px;
+            border-radius: 50% 50% 30% 30%;
+            opacity: 0;
+            pointer-events: none;
+            transform-origin: center bottom;
+            transition: opacity 0.35s ease;
+            background: radial-gradient(ellipse at 50% 80%, #fffde0 0%, #ffd000 40%, #ff8800 75%, #ff3300 100%);
+            box-shadow: 0 0 10px 4px rgba(255, 190, 40, 0.6);
+        }
+        
+        .flame.on {
+            opacity: 1;
+            animation: flicker 0.55s ease-in-out infinite alternate;
+        }
+        
+        #f1 {
+            top: 5%;
+            left: 37%;
+        }
+        
+        #f2 {
+            top: 5%;
+            left: 49%;
+            width: 13px;
+            height: 22px;
+        }
+        
+        @keyframes flicker {
+            0% {
+                transform: scaleX(1) scaleY(1) rotate(-2deg);
+            }
+            50% {
+                transform: scaleX(0.86) scaleY(1.1) rotate(1.5deg);
+            }
+            100% {
+                transform: scaleX(1.06) scaleY(0.94) rotate(2deg);
+            }
+        }
+        
+        .cake-hint {
+            font-size: 11px;
+            color: #c4a48a;
+            letter-spacing: 1.5px;
+            margin-bottom: 24px;
+            animation: up 0.9s ease 0.5s both;
+        }
+        /* AUDIO */
+        
+        .audio-bar {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            background: #fdf6ef;
+            border: 1px solid #f0ddc8;
+            border-radius: 40px;
+            padding: 10px 22px;
+            animation: up 0.9s ease 0.7s both;
+        }
+        
+        .play-btn {
+            width: 34px;
+            height: 34px;
+            border-radius: 50%;
+            background: #e8c49a;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.2s, transform 0.15s;
+        }
+        
+        .play-btn:hover {
+            background: #d4a870;
+            transform: scale(1.08);
+        }
+        
+        .audio-label {
+            font-size: 12px;
+            color: #9a6a3a;
+            letter-spacing: 1px;
+            white-space: nowrap;
+        }
+        
+        #cc {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 200;
+        }
+        
+        .floater {
+            position: fixed;
+            pointer-events: none;
+            font-size: 15px;
+            animation: rise 4.5s ease-in-out infinite;
+            opacity: 0;
+        }
+        
+        @keyframes up {
+            from {
+                opacity: 0;
+                transform: translateY(18px)
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0)
+            }
+        }
+        
+        @keyframes rise {
+            0% {
+                opacity: 0;
+                transform: translateY(0)
+            }
+            20% {
+                opacity: 0.6
+            }
+            80% {
+                opacity: 0.3
+            }
+            100% {
+                opacity: 0;
+                transform: translateY(-90px)
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <canvas id="cc"></canvas>
+    <p class="title">✦ Happy Birthday · 生日快乐 ✦</p>
+
+    <div class="scene">
+        <div class="card-3d" id="card">
+            <!-- 正面（默认）和 反面 图片 -->
+            <div class="face face-front">
+                <img id="card-front" src="反面.jpg" data-orig="反面.jpg" alt="正面">
+            </div>
+            <div class="face face-back">
+                <img id="card-back" src="正面.jpg" alt="反面">
+            </div>
+        </div>
+    </div>
+
+    <p class="hint" id="hint">↻ 点击明信片翻转</p>
+
+    <div id="bday">
+        <p class="bday-msg">🎂 祝提拉姆苏老师生日快乐<br>变成大人啦！🎉</p>
+        <div class="cake-box" id="cake-box">
+            <img src="cake.png" alt="蛋糕">
+            <div class="flame" id="f1"></div>
+            <div class="flame" id="f2"></div>
+        </div>
+        <p class="cake-hint">🕯 点击蛋糕点亮蜡烛</p>
+        <div class="audio-bar">
+            <button class="play-btn" id="play-btn"></button>
+            <span class="audio-label" id="audio-label">播放生日快乐歌 🎵</span>
+        </div>
+    </div>
+
+    <script>
+        (function() {
+            ['🌸', '✨', '🎀', '💛', '🌼', '💕', '🎊', '🌟'].forEach(function(d, i) {
+                var el = document.createElement('div');
+                el.className = 'floater';
+                el.textContent = d;
+                el.style.left = (5 + i * 12) + '%';
+                el.style.bottom = (2 + Math.random() * 5) + '%';
+                el.style.animationDelay = (i * 0.75) + 's';
+                el.style.animationDuration = (4 + Math.random() * 2) + 's';
+                document.body.appendChild(el);
+            });
+
+            var canvas = document.getElementById('cc'),
+                ctx = canvas.getContext('2d');
+            var pieces = [],
+                animId = null;
+
+            function resize() {
+                canvas.width = innerWidth;
+                canvas.height = innerHeight;
+            }
+            resize();
+            window.addEventListener('resize', resize);
+            var COLS = ['#f9c06a', '#f0a0c0', '#9dd4f0', '#b0e0a0', '#f9e07a', '#d4a0f0', '#ffd1dc', '#ffe4b5', '#c8e6c9'];
+
+            function shoot(cx, cy, n) {
+                cx = cx || canvas.width / 2;
+                cy = cy || canvas.height * 0.38;
+                n = n || 160;
+                for (var i = 0; i < n; i++) {
+                    var a = Math.random() * Math.PI * 2,
+                        s = 5 + Math.random() * 16;
+                    pieces.push({
+                        x: cx,
+                        y: cy,
+                        vx: Math.cos(a) * s,
+                        vy: Math.sin(a) * s - 9,
+                        r: 4 + Math.random() * 5,
+                        color: COLS[Math.floor(Math.random() * COLS.length)],
+                        rot: Math.random() * Math.PI * 2,
+                        rotV: (Math.random() - .5) * 0.2,
+                        shape: Math.random() < .55 ? 'r' : 'c',
+                        w: 7 + Math.random() * 6,
+                        h: 3 + Math.random() * 5,
+                        alpha: 1
+                    });
+                }
+                if (!animId) loop();
+            }
+
+            function loop() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                pieces = pieces.filter(function(p) {
+                    return p.alpha > .02;
+                });
+                pieces.forEach(function(p) {
+                    p.x += p.vx;
+                    p.y += p.vy;
+                    p.vy += 0.42;
+                    p.vx *= 0.982;
+                    p.rot += p.rotV;
+                    p.alpha -= 0.007;
+                    ctx.save();
+                    ctx.globalAlpha = p.alpha;
+                    ctx.translate(p.x, p.y);
+                    ctx.rotate(p.rot);
+                    ctx.fillStyle = p.color;
+                    if (p.shape === 'c') {
+                        ctx.beginPath();
+                        ctx.arc(0, 0, p.r, 0, Math.PI * 2);
+                        ctx.fill();
+                    } else ctx.fillRect(-p.w / 2, -p.h / 2, p.w, p.h);
+                    ctx.restore();
+                });
+                animId = pieces.length ? requestAnimationFrame(loop) : (ctx.clearRect(0, 0, canvas.width, canvas.height), null);
+            }
+
+            var flipped = false,
+                bdayShown = false;
+            var cardEl = document.getElementById('card'),
+                hintEl = document.getElementById('hint');
+            // Ensure we have the original front src saved so it can be restored
+            var _frontInit = document.getElementById('card-front');
+            if (_frontInit && !_frontInit.getAttribute('data-orig')) {
+                _frontInit.setAttribute('data-orig', _frontInit.src);
+            }
+            cardEl.addEventListener('click', function() {
+                flipped = !flipped;
+                // 切换并替换正面图片为反面（点击翻开时），翻回时还原
+                var frontImg = document.getElementById('card-front'),
+                    backImg = document.getElementById('card-back'),
+                    srcFront = frontImg.getAttribute('data-orig') || frontImg.src,
+                    srcBack = backImg.src;
+                if (flipped) frontImg.src = srcBack;
+                else frontImg.src = srcFront;
+                if (flipped) {
+                    cardEl.classList.add('flipped');
+                    hintEl.textContent = '↻ 再次点击翻回正面';
+                    shoot();
+                    if (!bdayShown) {
+                        bdayShown = true;
+                        setTimeout(function() {
+                            document.getElementById('bday').classList.add('on');
+                            setTimeout(autoPlay, 500);
+                        }, 900);
+                    }
+                } else {
+                    cardEl.classList.remove('flipped');
+                    hintEl.textContent = '↻ 点击明信片翻转';
+                }
+            });
+
+            var lit = false;
+            document.getElementById('cake-box').addEventListener('click', function() {
+                lit = !lit;
+                document.getElementById('f1').classList.toggle('on', lit);
+                document.getElementById('f2').classList.toggle('on', lit);
+                if (lit) {
+                    var r = document.getElementById('cake-box').getBoundingClientRect();
+                    shoot(r.left + r.width / 2, r.top + r.height * 0.2, 55);
+                }
+            });
+
+            var audioCtx = null,
+                isPlaying = false,
+                nodes = [];
+            var notes = [
+                [261.6, .4],
+                [261.6, .2],
+                [293.7, .6],
+                [261.6, .6],
+                [349.2, .6],
+                [329.6, 1.0],
+                [261.6, .4],
+                [261.6, .2],
+                [293.7, .6],
+                [261.6, .6],
+                [392.0, .6],
+                [349.2, 1.0],
+                [261.6, .4],
+                [261.6, .2],
+                [523.3, .6],
+                [440.0, .6],
+                [349.2, .6],
+                [329.6, .6],
+                [293.7, 1.0],
+                [466.2, .4],
+                [466.2, .2],
+                [440.0, .6],
+                [349.2, .6],
+                [392.0, .6],
+                [349.2, 1.2]
+            ];
+            var PLAY = '<svg width="11" height="13" viewBox="0 0 11 13"><path d="M1 1L10 6.5L1 12V1Z" fill="#7a4a2a"/></svg>';
+            var PAUSE = '<svg width="12" height="12" viewBox="0 0 12 12"><rect x="1" y="1" width="4" height="10" rx="1" fill="#7a4a2a"/><rect x="7" y="1" width="4" height="10" rx="1" fill="#7a4a2a"/></svg>';
+            document.getElementById('play-btn').innerHTML = PLAY;
+
+            function stopMusic() {
+                nodes.forEach(function(n) {
+                    try {
+                        n.stop();
+                    } catch (e) {}
+                });
+                nodes = [];
+                isPlaying = false;
+                document.getElementById('play-btn').innerHTML = PLAY;
+                document.getElementById('audio-label').textContent = '播放生日快乐歌 🎵';
+            }
+
+            function playBirthday() {
+                if (!audioCtx) audioCtx = new(window.AudioContext || window.webkitAudioContext)();
+                var t = audioCtx.currentTime + .05,
+                    total = 0;
+                nodes = [];
+                notes.forEach(function(nd) {
+                    var o = audioCtx.createOscillator(),
+                        g = audioCtx.createGain();
+                    o.connect(g);
+                    g.connect(audioCtx.destination);
+                    o.type = 'sine';
+                    o.frequency.setValueAtTime(nd[0], t);
+                    g.gain.setValueAtTime(0, t);
+                    g.gain.linearRampToValueAtTime(.28, t + .04);
+                    g.gain.linearRampToValueAtTime(.2, t + nd[1] * .8);
+                    g.gain.linearRampToValueAtTime(0, t + nd[1]);
+                    o.start(t);
+                    o.stop(t + nd[1]);
+                    nodes.push(o);
+                    t += nd[1];
+                    total += nd[1];
+                });
+                setTimeout(function() {
+                    if (isPlaying) stopMusic();
+                }, total * 1000 + 200);
+            }
+
+            function toggleMusic() {
+                if (isPlaying) {
+                    stopMusic();
+                } else {
+                    isPlaying = true;
+                    document.getElementById('play-btn').innerHTML = PAUSE;
+                    document.getElementById('audio-label').textContent = '♪ 生日快乐歌播放中…';
+                    playBirthday();
+                }
+            }
+            document.getElementById('play-btn').addEventListener('click', function(e) {
+                e.stopPropagation();
+                toggleMusic();
+            });
+
+            function autoPlay() {
+                if (!isPlaying) toggleMusic();
+            }
+            setTimeout(function() {
+                shoot(canvas.width / 2, canvas.height * 0.38, 90);
+            }, 1100);
+        })();
+    </script>
+</body>
+
+</html>

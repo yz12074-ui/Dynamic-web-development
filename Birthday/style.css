@@ -1,0 +1,187 @@
+/* style.css - 将 index.html 中的 style 内容粘贴或替换为下面的选择器样式 */
+
+
+/* 基本重置 */
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+
+/* 页面基础 */
+
+body {
+    font-family: "Helvetica Neue", Arial, sans-serif;
+    background: linear-gradient(180deg, #fff7f0 0%, #ffeef0 100%);
+    color: #222;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    line-height: 1.4;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+}
+
+
+/* 容器 */
+
+.container {
+    width: 100%;
+    max-width: 900px;
+    background: #ffffffcc;
+    border-radius: 12px;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+    padding: 2rem;
+}
+
+
+/* 页首/标题 */
+
+.header {
+    text-align: center;
+    margin-bottom: 1.25rem;
+}
+
+.header h1 {
+    font-size: 2rem;
+    color: #ff6b81;
+    margin-bottom: .25rem;
+}
+
+.header p {
+    color: #666;
+    font-size: .95rem;
+}
+
+
+/* 生日卡片/主要区域 */
+
+.birthday-card {
+    display: grid;
+    grid-template-columns: 1fr 320px;
+    gap: 1.25rem;
+    align-items: start;
+}
+
+
+/* 文字内容 */
+
+.card-content {
+    padding: 1rem;
+}
+
+.card-content h2 {
+    font-size: 1.25rem;
+    color: #ff4d6d;
+    margin-bottom: .5rem;
+}
+
+.card-content p {
+    color: #444;
+    margin-bottom: 1rem;
+}
+
+
+/* 侧栏：蛋糕/礼物/按钮 */
+
+.card-aside {
+    background: linear-gradient(180deg, #fff 0, #fff0);
+    padding: 1rem;
+    border-radius: 8px;
+    text-align: center;
+}
+
+.cake {
+    width: 180px;
+    height: 140px;
+    margin: 0 auto 1rem;
+    position: relative;
+    background: linear-gradient(#ffd8e0, #ffb6cc);
+    border-radius: 12px 12px 6px 6px;
+    box-shadow: inset 0 -6px 12px rgba(0, 0, 0, 0.06);
+}
+
+.cake::before {
+    content: "";
+    position: absolute;
+    top: -14px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 8px;
+    height: 20px;
+    background: #fff7;
+    border-radius: 2px;
+    box-shadow: 0 6px 0 #fff7;
+}
+
+.btn {
+    display: inline-block;
+    padding: .6rem 1rem;
+    background: linear-gradient(180deg, #ff6b81, #ff4d6d);
+    color: #fff;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 600;
+    box-shadow: 0 6px 18px rgba(255, 77, 109, 0.18);
+    transition: transform .12s ease, box-shadow .12s ease;
+}
+
+.btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 28px rgba(255, 77, 109, 0.18);
+}
+
+
+/* 气球装饰 */
+
+.balloon {
+    width: 48px;
+    height: 64px;
+    border-radius: 50% 50% 50% 50%;
+    background: radial-gradient(circle at 30% 30%, #fff8, transparent 30%), #ffc1d6;
+    display: inline-block;
+    margin: 0 .4rem;
+    position: relative;
+    transform-origin: bottom center;
+    animation: float 4s ease-in-out infinite;
+}
+
+.balloon::after {
+    content: "";
+    position: absolute;
+    bottom: -12px;
+    left: 50%;
+    width: 2px;
+    height: 20px;
+    background: #a33;
+    transform: translateX(-50%);
+}
+
+@keyframes float {
+    0% {
+        transform: translateY(0) rotate(-3deg);
+    }
+    50% {
+        transform: translateY(-10px) rotate(3deg);
+    }
+    100% {
+        transform: translateY(0) rotate(-3deg);
+    }
+}
+
+
+/* 响应式 */
+
+@media (max-width: 720px) {
+    .birthday-card {
+        grid-template-columns: 1fr;
+    }
+    .cake {
+        width: 140px;
+        height: 110px;
+    }
+}
